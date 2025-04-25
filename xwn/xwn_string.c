@@ -49,6 +49,7 @@ typedef enum
     Format_Specifier,
     Format_SignedIntegar,
     Format_CString,
+    Format_String,
 
     Format_EndOfStream,
 } format_token;
@@ -75,6 +76,7 @@ GetNextFormatToken(format_state *State)
         case 'd':
         case 'i': { Result = Format_SignedIntegar; } break;
         case 's': { Result = Format_CString; } break;
+        case 'S': { Result = Format_String; } break;
     }
     
     return Result;
@@ -143,6 +145,16 @@ FormatBufferArgs(uint8_t *Data, char *Format, va_list ArgList)
                         }
                     } break;
 
+                    case Format_String:
+                    {
+                        buffer String = va_arg(ArgList, buffer);
+                        size_t At = 0;
+                        while(At < String.Length)
+                        {
+                            *State.Tail++ = String.Data[At++];
+                        }
+                    } break;
+
                     case Format_Unknown:
                     case Format_Specifier:
                     case Format_EndOfStream:
@@ -155,6 +167,7 @@ FormatBufferArgs(uint8_t *Data, char *Format, va_list ArgList)
 
             case Format_SignedIntegar:
             case Format_CString:
+            case Format_String:
             case Format_Unknown:
             {
                 *State.Tail++ = State.At[-1];

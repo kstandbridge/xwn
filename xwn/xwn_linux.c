@@ -30,5 +30,14 @@ void _start()
 {
     int64_t Result = Main();
 
+    if(FailedTests == 0)
+    {
+        WriteFormat("%d out of %d tests passed\n", TotalTests, TotalTests);
+    }
+    else
+    {
+        WriteFormat("%d out of %d tests failed\n", FailedTests, TotalTests);
+    }
+
     PlatformExit(Result);
 }
