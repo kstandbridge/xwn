@@ -17,7 +17,6 @@ RunStringEqualTests()
 static void
 RunStringFormatTests()
 {
-
     {
         uint8_t Data[64];
         buffer String = FormatBuffer(Data, "before %d after", 42);
@@ -34,6 +33,19 @@ RunStringFormatTests()
         uint8_t Data[64];
         buffer String = FormatBuffer(Data, "before %d after", 9876543210);
         AssertEqualString(CStringToBuffer("before 9876543210 after"), String);
+    }
+
+    {
+        uint8_t Data[128];
+        buffer String = FormatBuffer(Data, "before %s after", "foo bar bas");
+        AssertEqualString(CStringToBuffer("before foo bar bas after"), String);
+    }
+
+    {
+        uint8_t Data[128];
+        buffer InnerString = CStringToBuffer("foo bar bas");
+        buffer String = FormatBuffer(Data, "before %S after", InnerString);
+        AssertEqualString(CStringToBuffer("before foo bar bas after"), String);
     }
 }
 
