@@ -48,6 +48,7 @@ typedef enum
 
     Format_Specifier,
     Format_SignedIntegar,
+    Format_CString,
 
     Format_EndOfStream,
 } format_token;
@@ -72,7 +73,8 @@ GetNextFormatToken(format_state *State)
         case '\0' : { Result = Format_EndOfStream; } break;
         case '%': { Result = Format_Specifier; } break;
         case 'd':
-        case 's': { Result = Format_SignedIntegar; } break;
+        case 'i': { Result = Format_SignedIntegar; } break;
+        case 's': { Result = Format_CString; } break;
     }
     
     return Result;
@@ -131,6 +133,16 @@ FormatBufferArgs(uint8_t *Data, char *Format, va_list ArgList)
                         }
 
                     } break;
+
+                    case Format_CString:
+                    {
+                        uint8_t *At = va_arg(ArgList, uint8_t *);
+                        while(At[0] != '\0')
+                        {
+                            *State.Tail++ = *At++;
+                        }
+                    } break;
+
                     case Format_Unknown:
                     case Format_Specifier:
                     case Format_EndOfStream:
@@ -139,11 +151,10 @@ FormatBufferArgs(uint8_t *Data, char *Format, va_list ArgList)
                         Parsing = false;
                     } break;
                 }
-
-
             } break;
 
             case Format_SignedIntegar:
+            case Format_CString:
             {
                 // TODO(kstandbridge): Error handling
                 Parsing = false;
