@@ -12,37 +12,8 @@ static void
 PlatformWrite(buffer String);
 
 static void
-WriteFormat(char *Format, ...)
-{
-    uint8_t Buffer[256];
-    va_list ArgList;
+WriteFormat(char *Format, ...);
 
-    va_start(ArgList, Format);
-    buffer String = FormatBufferArgs(Buffer, Format, ArgList);
-    va_end(ArgList);
-
-    PlatformWrite(String);
-}
-
-static volatile int64_t TotalTests = 0;
-static volatile int64_t FailedTests = 0;
-
-#define AssertEqualString(Expected, Actual) \
-    ++TotalTests; \
-    if(!BuffersAreEqual(Expected, Actual)) \
-    { \
-        ++FailedTests; \
-        WriteFormat("%s(%d): equal string assert fail.\n\t\tExpected:\t'%S'\n\t\tActual:\t\t'%S'\n", \
-                    __FILE__, __LINE__, Expected, Actual); \
-    }
-
-#define AssertNotEqualString(Expected, Actual) \
-    ++TotalTests; \
-    if(BuffersAreEqual(Expected, Actual)) \
-    { \
-        ++FailedTests; \
-        WriteFormat("%s(%d): not equal string assert fail.\n\t\tExpected:\t'%S'\n\t\tActual:\t\t'%S'\n", \
-                    __FILE__, __LINE__, Expected, Actual); \
-    }
+#include "xwn/xwn_test.h"
 
 static int64_t Main();
