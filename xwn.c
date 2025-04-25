@@ -1,5 +1,8 @@
 #include "xwn/xwn_string.c"
 
+static void
+RunXwnTests();
+
 #ifdef __linux__
 
 #include "xwn/xwn_linux.c"
@@ -22,3 +25,5 @@ WriteFormat(char *Format, ...)
     
     PlatformWrite(String);
 }
+
+#include "xwn/xwn_test.c"

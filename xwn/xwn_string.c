@@ -18,25 +18,18 @@ CStringToBuffer(char *CStr)
 static bool32_t
 BuffersAreEqual(buffer A, buffer B)
 {
-    bool32_t Result = true;
+    bool32_t Result = (A.Length == B.Length);
 
-    if(A.Length == B.Length)
+    if(Result)
     {
-        uint8_t *AtA = A.Data;
-        uint8_t *AtB = B.Data;
-        size_t Length = A.Length;
-        while(Length--)
+        for(size_t Index = 0; Index < A.Length; ++Index)
         {
-            if(AtA++ != AtB++)
+            if(A.Data[Index] != B.Data[Index])
             {
                 Result = false;
                 break;
             }
         }
-    }
-    else
-    {
-        Result = false;
     }
 
     return Result;

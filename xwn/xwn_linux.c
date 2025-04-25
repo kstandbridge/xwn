@@ -28,6 +28,8 @@ PlatformExit(int64_t status)
 
 void _start()
 {
+    RunXwnTests();
+
     int64_t Result = Main();
 
     if(FailedTests == 0)
