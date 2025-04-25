@@ -13,3 +13,6 @@ BuffersAreEqual(buffer A, buffer B);
 
 static buffer
 FormatBuffer(uint8_t *Data, char *Format, ...);
+
+static buffer
+FormatBufferArgs(uint8_t *Data, char *Format, va_list ArgList);

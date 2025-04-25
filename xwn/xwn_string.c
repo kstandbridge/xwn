@@ -155,11 +155,6 @@ FormatBufferArgs(uint8_t *Data, char *Format, va_list ArgList)
 
             case Format_SignedIntegar:
             case Format_CString:
-            {
-                // TODO(kstandbridge): Error handling
-                Parsing = false;
-            } break;
-            
             case Format_Unknown:
             {
                 *State.Tail++ = State.At[-1];
