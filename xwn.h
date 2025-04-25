@@ -1,6 +1,10 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#define true 1
+#define false 0
+typedef int32_t bool32_t;
+
 typedef struct
 {
     uint8_t *Data;
@@ -9,6 +13,9 @@ typedef struct
 
 static buffer
 CStringToBuffer(char *CStr);
+
+static bool32_t
+BuffersAreEqual(buffer A, buffer B);
 
 static void
 PlatformWrite(buffer String);
